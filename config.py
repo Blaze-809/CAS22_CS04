@@ -6,9 +6,7 @@ REQUEST_TIMEOUT = 5
 
 SQL_TEST_PAYLOADS = ["'", '"', " OR 1=1 --", " OR '1'='1", "' OR 'a'='a"]
 
-
 XSS_TEST_SCRIPT = "<script>alert('XSS')</script>"
-
 
 ENABLE_XSS_CHECK = True
 ENABLE_SQLI_CHECK = True
