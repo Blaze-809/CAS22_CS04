@@ -1,14 +1,12 @@
 import requests
 from urllib.parse import urljoin
 from bs4 import BeautifulSoup
-from utils import check_xss, check_sql_injection
-from config import HEADERS, REQUEST_TIMEOUT, ENABLE_XSS_CHECK, ENABLE_SQLI_CHECK
+from utils import check_xss, check_sql_injection, check_open_redirect
 
 def scan_website(url):
-    """Scans the website for vulnerabilities."""
+    
     print(f"Scanning {url} for vulnerabilities...\n")
     
-    # Get all forms
     forms = get_forms(url)
     print(f"Found {len(forms)} forms on {url}\n")
     
@@ -23,8 +21,11 @@ def scan_website(url):
         if check_sql_injection(full_url, method, form):
             print(f"[!] SQL Injection vulnerability detected in {full_url}")
 
+    if check_open_redirect(url):
+        print(f"[!] Open Redirect vulnerability detected at {url}")
+
 def get_forms(url):
-    """Extracts all forms from a given webpage."""
+    
     response = requests.get(url)
     soup = BeautifulSoup(response.content, "html.parser")
     return soup.find_all("form")

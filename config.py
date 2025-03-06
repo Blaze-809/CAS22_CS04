@@ -8,5 +8,8 @@ SQL_TEST_PAYLOADS = ["'", '"', " OR 1=1 --", " OR '1'='1", "' OR 'a'='a"]
 
 XSS_TEST_SCRIPT = "<script>alert('XSS')</script>"
 
+OPEN_REDIRECT_TEST_URL = "http://evil.com"  
+
 ENABLE_XSS_CHECK = True
 ENABLE_SQLI_CHECK = True
+ENABLE_OPEN_REDIRECT_CHECK = True
