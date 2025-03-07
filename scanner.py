@@ -1,10 +1,10 @@
 import requests
 from urllib.parse import urljoin
 from bs4 import BeautifulSoup
-from utils import check_xss, check_sql_injection, check_open_redirect
+from utils import check_xss, check_sql_injection
 
 def scan_website(url):
-    """Scans the website and returns a list of detected vulnerabilities."""
+    """Scans the website and returns a list of detected vulnerabilities with solutions."""
     results = []
 
     try:
@@ -26,13 +26,11 @@ def scan_website(url):
 
         if xss_result:
             results.append(f"❗ XSS vulnerability detected in {full_url}")
+            results.append("🔹 Solution: Use input validation, encode output, and implement Content Security Policy (CSP).")
 
         if sql_result:
             results.append(f"❗ SQL Injection vulnerability detected in {full_url}")
-
-    open_redirect_result = check_open_redirect(url)
-    if open_redirect_result:
-        results.append(f"❗ Open Redirect vulnerability detected at {url}")
+            results.append("🔹 Solution: Use prepared statements (parameterized queries) and input validation to prevent SQL Injection.")
 
     return results if results else ["✅ No vulnerabilities found!"]
 
